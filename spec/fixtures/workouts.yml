@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: workouts
+#
+#  id         :bigint           not null, primary key
+#  begin_time :datetime
+#  calories   :integer          default(0)
+#  duration   :integer          default(0)
+#  end_time   :datetime
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  profile_id :bigint           not null
+#
+# Indexes
+#
+#  index_workouts_on_profile_id  (profile_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (profile_id => profiles.id)
+#
+valid_workout:
+  begin_time: 2024-01-01 06:00:00
+  end_time: 2024-01-01 07:00:00
+  name: Morning Workout
+  duration: 3600

@@ -82,3 +82,5 @@ gem "omniauth", "~> 2.1"
 gem "annotate", "~> 3.2"
 
 gem "jsonapi-serializer", "~> 2.2"
+
+gem "rspec-rails", "~> 7.0"
