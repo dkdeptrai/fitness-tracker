@@ -10,23 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_19_083510) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_23_064413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "categories_exercises", force: :cascade do |t|
-    t.bigint "exercise_category_id", null: false
-    t.bigint "exercise_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["exercise_category_id"], name: "index_categories_exercises_on_exercise_category_id"
-    t.index ["exercise_id"], name: "index_categories_exercises_on_exercise_id"
-  end
 
   create_table "exercise_categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "exercise_categories_exercises", force: :cascade do |t|
+    t.bigint "exercise_category_id", null: false
+    t.bigint "exercise_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_category_id"], name: "index_exercise_categories_exercises_on_exercise_category_id"
+    t.index ["exercise_id"], name: "index_exercise_categories_exercises_on_exercise_id"
   end
 
   create_table "exercises", force: :cascade do |t|
@@ -39,19 +39,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_19_083510) do
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
-  create_table "muscle_groups", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "muscle_groups_exercises", force: :cascade do |t|
+  create_table "exercises_muscle_groups", force: :cascade do |t|
     t.bigint "muscle_group_id", null: false
     t.bigint "exercise_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["exercise_id"], name: "index_muscle_groups_exercises_on_exercise_id"
-    t.index ["muscle_group_id"], name: "index_muscle_groups_exercises_on_muscle_group_id"
+    t.index ["exercise_id"], name: "index_exercises_muscle_groups_on_exercise_id"
+    t.index ["muscle_group_id"], name: "index_exercises_muscle_groups_on_muscle_group_id"
+  end
+
+  create_table "muscle_groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -77,6 +77,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_19_083510) do
     t.string "confirmation_token"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.boolean "admin"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -107,11 +108,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_19_083510) do
     t.index ["profile_id"], name: "index_workouts_on_profile_id"
   end
 
-  add_foreign_key "categories_exercises", "exercise_categories"
-  add_foreign_key "categories_exercises", "exercises"
+  add_foreign_key "exercise_categories_exercises", "exercise_categories"
+  add_foreign_key "exercise_categories_exercises", "exercises"
   add_foreign_key "exercises", "users"
-  add_foreign_key "muscle_groups_exercises", "exercises"
-  add_foreign_key "muscle_groups_exercises", "muscle_groups"
+  add_foreign_key "exercises_muscle_groups", "exercises"
+  add_foreign_key "exercises_muscle_groups", "muscle_groups"
   add_foreign_key "profiles", "users"
   add_foreign_key "workout_sets", "exercises"
   add_foreign_key "workout_sets", "workouts"

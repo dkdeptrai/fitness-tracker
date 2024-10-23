@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  admin                  :boolean
 #  allow_password_change  :boolean          default(FALSE)
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
@@ -34,5 +35,8 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  #
+
+  def admin?
+    self.admin
+  end
 end

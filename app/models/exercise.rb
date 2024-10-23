@@ -21,6 +21,6 @@
 class Exercise < ApplicationRecord
   has_and_belongs_to_many :muscle_groups
   has_and_belongs_to_many :exercise_categories
-  has_many :sets, dependent: :destroy
+  has_many :workout_sets, dependent: :destroy
   belongs_to :user
 end

@@ -1,18 +1,20 @@
 Rails.application.routes.draw do
   resources :profiles
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :exercises, only: [:index, :show, :new, :create, :edit, :update, :destroy] # For web UI (admin)
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  devise_for :users
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', skip: [:omniauth_callbacks]
+
+      resources :exercises, only: [:index, :show, :create, :update, :destroy]
+      resources :profiles, only: [:show]
     end
   end
 
-  # Defines the root path route ("/")
+  # Set the root to a web-based profiles index
   root to: "profiles#index"
 end
