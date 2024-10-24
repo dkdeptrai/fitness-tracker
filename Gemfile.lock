@@ -129,6 +129,13 @@ GEM
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
     erubi (1.13.0)
+    factory_bot (6.5.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -354,6 +361,8 @@ DEPENDENCIES
   devise (~> 4.9)
   devise-jwt (~> 0.12.1)
   devise_token_auth (~> 1.2)
+  factory_bot_rails
+  faker (~> 3.5)
   grape (~> 2.2)
   hotwire-livereload (~> 1.4)
   importmap-rails

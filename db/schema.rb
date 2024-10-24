@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_23_064413) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_24_091057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,15 +20,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_064413) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "exercise_categories_exercises", force: :cascade do |t|
-    t.bigint "exercise_category_id", null: false
-    t.bigint "exercise_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["exercise_category_id"], name: "index_exercise_categories_exercises_on_exercise_category_id"
-    t.index ["exercise_id"], name: "index_exercise_categories_exercises_on_exercise_id"
-  end
-
   create_table "exercises", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -36,6 +27,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_064413) do
     t.datetime "updated_at", null: false
     t.boolean "created_by_user"
     t.bigint "user_id", null: false
+    t.bigint "exercise_category_id"
+    t.index ["exercise_category_id"], name: "index_exercises_on_exercise_category_id"
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
@@ -108,8 +101,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_23_064413) do
     t.index ["profile_id"], name: "index_workouts_on_profile_id"
   end
 
-  add_foreign_key "exercise_categories_exercises", "exercise_categories"
-  add_foreign_key "exercise_categories_exercises", "exercises"
+  add_foreign_key "exercises", "exercise_categories"
   add_foreign_key "exercises", "users"
   add_foreign_key "exercises_muscle_groups", "exercises"
   add_foreign_key "exercises_muscle_groups", "muscle_groups"

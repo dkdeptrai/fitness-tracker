@@ -22,8 +22,7 @@
 #
 class Workout < ApplicationRecord
   belongs_to :profile
-  has_many :sets
-
+  has_many :workout_sets
   validates :begin_time, presence: true
 
   validates :duration, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

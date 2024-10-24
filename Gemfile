@@ -60,7 +60,9 @@ group :development do
   # gem "spring"
 end
 
-
+group :test do
+  gem "factory_bot_rails"
+end
 gem "hotwire-livereload", "~> 1.4", :group => :development
 
 gem "tailwindcss-rails", "~> 2.7"
@@ -84,3 +86,5 @@ gem "annotate", "~> 3.2"
 gem "jsonapi-serializer", "~> 2.2"
 
 gem "rspec-rails", "~> 7.0"
+
+gem "faker", "~> 3.5"

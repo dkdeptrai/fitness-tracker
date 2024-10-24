@@ -8,6 +8,6 @@
 #  updated_at :datetime         not null
 #
 class ExerciseCategory < ApplicationRecord
-  has_and_belongs_to_many :exercises
+  has_many :exercises
   validates :name, presence: true
 end
