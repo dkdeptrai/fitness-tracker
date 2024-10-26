@@ -11,3 +11,15 @@
 }
 
 */
+
+.notice {
+  @apply bg-yellow-200;
+}
+
+.alert {
+  @apply bg-red-200;
+}
+
+.error {
+  @apply bg-red-200;
+}

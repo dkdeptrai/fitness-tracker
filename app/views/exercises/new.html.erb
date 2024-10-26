@@ -1,48 +1,7 @@
-<div>
-  <h1>Hello</h1>
-  <% if @exercise.errors.any? %>
-    <div class="error">
-      <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
-
-      <ul>
-        <% @exercise.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+<div class="">
 
 
-  <% end %>
-  <%= form_with model: @exercise do |form| %>
-    <div class="field">
-      <%= form.label :name %><br/>
-      <%= form.text_field :name %>
-    </div>
-
-    <div class="field">
-      <%= form.label :description %><br/>
-      <%= form.text_area :description %>
-    </div>
-
-    <div class="field">
-      <%= form.label :muscle_group %><br/>
-      <% @muscle_groups.each do |muscle_group| %>
-        <div>
-          <%= check_box_tag "exercise[muscle_group_ids][]", muscle_group.id, @exercise.muscle_group_ids.include?(muscle_group.id)%>
-         <%= muscle_group.name %>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="field">
-      <%= form.label :exercise_category %><br/>
-      <%= form.select :exercise_category_ids, options_from_collection_for_select(@exercise_categories, :id, :name, @exercise.exercise_categories), prompt: 'Select a category' %>
-    </div>
-
-    <div class="actions">
-      <%= form.submit %>
-    </div>
-  <% end %>
+  <%= render 'form', exercise: @exercise %>
 </div>
 
 

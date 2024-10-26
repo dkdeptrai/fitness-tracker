@@ -20,18 +20,15 @@ class ExercisesController < ApplicationController
   def create
     created_by_user = !current_user.admin?
     muscle_groups = MuscleGroup.where(id: exercise_params[:muscle_group_ids])
-    exercise_categories = ExerciseCategory.find(id: exercise_params[:exercise_category_ids])
     @exercise = current_user.exercises.build(exercise_params.merge(
       created_by_user: created_by_user,
       muscle_groups: muscle_groups,
-      exercise_categories: exercise_categories
     ))
 
     if @exercise.save
       redirect_to @exercise, notice: 'Exercise was successfully created.'
     else
-      flash.now[:error] = @exercise.errors.full_messages.join(', ')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -40,15 +37,22 @@ class ExercisesController < ApplicationController
   end
 
   def update
-
+    muscle_groups = MuscleGroup.where(id: exercise_params[:muscle_group_ids])
+    if @exercise.update(exercise_params.merge(muscle_groups: muscle_groups))
+      redirect_to @exercise, notice: 'Exercise was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    @exercise.destroy!
 
+    redirect_to exercises_path, notice: 'Exercise was successfully destroyed.'
   end
 
   def exercise_params
-    params.require(:exercise).permit(:name, :description, :exercise_category_ids , muscle_group_ids: [])
+    params.require(:exercise).permit(:name, :description, :exercise_category_id , muscle_group_ids: [])
   end
 
   def set_exercise_categories

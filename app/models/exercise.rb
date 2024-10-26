@@ -27,8 +27,8 @@ class Exercise < ApplicationRecord
   has_many :workout_sets, dependent: :destroy
   belongs_to :user
 
-  validates :name, presence: true
-  validates :description, presence: true
+  validates :name, presence: true, uniqueness: true, length: {minimum: 1}
+  validates :description, presence: true, length: {minimum: 1}
   validates :user_id, presence: true
   validates :created_by_user, inclusion: { in: [true, false] }
   validates :muscle_groups, presence: true

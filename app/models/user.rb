@@ -38,7 +38,17 @@ class User < ApplicationRecord
   #
   has_many :exercises, dependent: :destroy
   has_one :profile, dependent: :destroy
+
+  after_create_commit :create_profile
+
   def admin?
     self.admin
   end
+
+  private
+  
+  def create_profile
+    Profile.create(user_id: self.id)
+  end
+
 end
