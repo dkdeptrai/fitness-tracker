@@ -16,7 +16,8 @@ Rails.application.routes.draw do
         get :search, on: :collection
       end
       resources :workouts
-      resources :workout_sets
+      resources :workout_exercises
+      resources :sets
       resources :profiles
     end
   end

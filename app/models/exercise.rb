@@ -24,7 +24,7 @@
 class Exercise < ApplicationRecord
   has_and_belongs_to_many :muscle_groups
   belongs_to :exercise_category
-  has_many :workout_sets, dependent: :destroy
+  has_many :sets, dependent: :destroy
   belongs_to :user
 
   validates :name, presence: true, uniqueness: true, length: {minimum: 1}

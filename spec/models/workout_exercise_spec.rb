@@ -1,10 +1,8 @@
 # == Schema Information
 #
-# Table name: workout_sets
+# Table name: workout_exercises
 #
 #  id          :bigint           not null, primary key
-#  reps        :integer
-#  weight      :float
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  exercise_id :bigint           not null
@@ -12,8 +10,8 @@
 #
 # Indexes
 #
-#  index_workout_sets_on_exercise_id  (exercise_id)
-#  index_workout_sets_on_workout_id   (workout_id)
+#  index_workout_exercises_on_exercise_id  (exercise_id)
+#  index_workout_exercises_on_workout_id   (workout_id)
 #
 # Foreign Keys
 #
@@ -22,6 +20,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe WorkoutSet, type: :model do
+RSpec.describe WorkoutExercise, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

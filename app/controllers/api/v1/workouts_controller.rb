@@ -17,6 +17,7 @@ module Api
 
       def create
         @workout = Workout.new(workout_params)
+
         if @workout.save
           redirect_to @workout, notice: 'Workout was successfully created.'
         else
@@ -24,7 +25,19 @@ module Api
         end
       end
 
+      def update
+        if @workout.update(workout_params)
+          redirect_to @workout, notice: 'Workout was successfully updated.'
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      end
+
       private
+
+      def workout_params
+        params.require(:workout).permit(:name, :profile_id, :begin_time)
+      end
 
       def set_profile
         @profile = Profile.where(users: current_user)

@@ -20,14 +20,8 @@
 #  fk_rails_...  (exercise_id => exercises.id)
 #  fk_rails_...  (workout_id => workouts.id)
 #
-class WorkoutSet < ApplicationRecord
-  belongs_to :workout
-  belongs_to :exercise
+require 'rails_helper'
 
-  validates :reps, presence: true
-  validates :reps, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :weight, presence: true
-  validates :weight, numericality: { greater_than_or_equal_to: 0 }
-  validates :exercise_id, presence: true
-  validates :workout_id, presence: true
+RSpec.describe Set, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
