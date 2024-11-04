@@ -22,15 +22,13 @@
 #
 class Workout < ApplicationRecord
   belongs_to :profile
-  has_many :workout_exercises
+  has_many :workout_exercises, dependent: :destroy
   validates :begin_time, presence: true
 
   validates :duration, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :calories, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-
   before_save :set_name_to_begin_time
-  before_save :calculate_duration
 
   private
 
@@ -40,9 +38,14 @@ class Workout < ApplicationRecord
     end
   end
 
+  def complete_workout
+    self.end_time = Time.now
+    calculate_duration
+  end
+
   def calculate_duration
-    if begin_time && end_time
-      self.duration = (end_time - begin_time).to_i
+    if self.begin_time && self.end_time
+      self.duration = (self.end_time - self.begin_time).to_i
     end
   end
 end

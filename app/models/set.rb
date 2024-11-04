@@ -21,7 +21,7 @@
 #  fk_rails_...  (workout_id => workouts.id)
 #
 class Set < ApplicationRecord
-  belongs_to :workout_exercise
+  belongs_to :workout_exercise, touch: true
 
   validates :reps, presence: true
   validates :reps, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

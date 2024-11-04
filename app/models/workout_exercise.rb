@@ -19,7 +19,7 @@
 #  fk_rails_...  (workout_id => workouts.id)
 #
 class WorkoutExercise < ApplicationRecord
-  belongs_to :workout
+  belongs_to :workout, touch: true
   belongs_to :exercise
   has_many :sets, dependent: :destroy
 end
