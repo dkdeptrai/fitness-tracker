@@ -63,7 +63,7 @@ begin
     Exercise.create!(
       name: exercise[:name],
       description: exercise[:description],
-      exercise_categories: [exercise_category],
+      exercise_category: exercise_category,
       muscle_groups: muscle_groups,
       user: user,
       created_by_user: exercise[:created_by_user]

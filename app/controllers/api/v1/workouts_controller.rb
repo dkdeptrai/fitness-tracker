@@ -19,9 +19,9 @@ module Api
         @workout = Workout.new(workout_params)
 
         if @workout.save
-          redirect_to @workout, notice: 'Workout was successfully created.'
+          render json: @workout, status: :created
         else
-          render :new, status: :unprocessable_entity
+          render json: @workout.errors, status: :unprocessable_entity
         end
       end
 

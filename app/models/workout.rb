@@ -31,7 +31,6 @@ class Workout < ApplicationRecord
   before_save :set_name_to_begin_time
 
   private
-
   def set_name_to_begin_time
     if self.name.blank?
       self.name = begin_time.strftime("%Y-%m-%d %H:%M:%S")
