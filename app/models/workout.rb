@@ -44,7 +44,7 @@ class Workout < ApplicationRecord
 
   def calculate_duration
     if self.begin_time && self.end_time
-      self.duration = (self.end_time - self.begin_time).to_i
+      self.duration = (self.end_time.to_i - self.begin_time.to_i)
     end
   end
 end
