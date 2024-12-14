@@ -23,31 +23,46 @@
 require 'rails_helper'
 
 RSpec.describe Workout, type: :model do
-  fixtures :workouts
+  let(:profile) { create(:profile) }
 
-  before do
-    @valid_workout = workouts(:valid_workout)
+  context 'validations' do
+    it 'is valid with valid attributes' do
+      workout = build(:workout, profile: profile)
+      expect(workout).to be_valid
+    end
+
+    it 'is invalid without a begin time' do
+      workout = build(:workout, :invalid, profile: profile)
+      expect(workout).to be_invalid
+      expect(workout.errors[:begin_time]).to include("can't be blank")
+    end
+
+    it 'is invalid with negative duration' do
+      workout = build(:workout, duration: -10, profile: profile)
+      expect(workout).to be_invalid
+      expect(workout.errors[:duration]).to include("must be greater than or equal to 0")
+    end
   end
 
-  it "requires a begin time" do
-    workout = Workout.new(name: "invalid workout",begin_time: nil, end_time: nil)
-    expect(workout).not_to be_valid
-    expect(workout.errors[:begin_time]).to include("can't be blank")
-
-    workout = @valid_workout
-    expect(workout).to be_valid
+  context 'callbacks' do
+    it 'sets name to begin_time if name is blank before saving' do
+      workout = build(:workout, name: nil, profile: profile, begin_time: Time.zone.local(2024, 1, 1, 15, 0, 0))
+      workout.save
+      expect(workout.name).to eq("2024-01-01 15:00:00")
+    end
   end
 
-  it "name defaults to begin time" do
-    workout = Workout.new(begin_time: Time.now, end_time: Time.now + 1.hour)
-    workout.save
-    expect(workout).to be_valid
-    expect(workout.name).to eq(workout.begin_time.strftime("%Y-%m-%d %H:%M:%S"))
-  end
 
-  it "duration is calculated correctly" do
-    workout = Workout.new(begin_time: Time.now, end_time: Time.now + 1.hour)
-    workout.save
-    expect(workout.duration).to eq(1.hour)
+  context 'methods' do
+    describe '#complete_workout' do
+      it 'sets end_time and calculates duration' do
+        workout = create(:workout, profile: profile, begin_time: Time.now)
+        travel_to(Time.now + 2.hours) do
+          workout.send(:complete_workout)
+          expect(workout.end_time).not_to be_nil
+          expect(workout.duration).to eq(7200)
+        end
+      end
+    end
   end
 end
